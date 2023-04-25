@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+ name: ambassador-pod
+spec:
+ containers:
+ - name: nginx
+   image:
+ - name:
+   image:
+   volumeMounts:
+   - name: config-volume
+     mountPath: /usr/local/etc/haproxy/haproxy.cfg
+  volumers:
+  - name: config-volumr
+    configMap:
+     name: ambassador-config

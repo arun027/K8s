@@ -1,0 +1,21 @@
+apiVerision: v1
+kind: Pod
+metadata:
+ name: nginx-app
+spec:
+ volumers:
+ - name: myvol
+   emptyDir: {}
+ containers:
+ - name: nginx-main-app
+   image: quay.io/gauravkumar9130/nginx
+   volumeMounts:
+   - name: myvol
+     mountPath:  /usr/share/nginx/html
+ - name: side-car
+   image: quay.io/gauravkumar9130/ubuntu-git
+   command: ["/bin/sh"]
+   args: ["-c" ,"while true; do git clone https://github.com/gauravkumar9130/webpage; cd webpage; mv * /website/; sleep 10; done"]
+   volumeMounts:
+   - name: myvol
+     mountPath: /website

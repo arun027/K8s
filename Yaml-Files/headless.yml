@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+ name: web-svc                #<HEAD LESS SERVICE NAME>
+spec:
+ ports:
+ - port: 80
+ selector:
+  app: web
+ clusterIP: None
+
+        now dns entry:
+
+                <podname>.<servicename>.<namespacename>.svc.cluster.local
+                web-0.web-svc.default.svc.cluster.local
+                web-1.web-svc.default.svc.cluster.local
+                web-2.web-svc.default.svc.cluster.local

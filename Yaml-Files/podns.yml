@@ -1,0 +1,9 @@
+piVersion: v1
+kind: Pod
+metadata:
+ name: abc
+ namespace: production
+spec:
+ containers:
+ - name: abc
+   image: quay.io/gauravkumar9130/nginxdemo

@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+ name: dbpolicy
+spec:
+ podSelector:
+  matchLabels:
+#   <PASTE DB LABEL>                ##we are creating for db pod
+   app: db
+ policyTypes:
+ - Ingress
+ - Egress
+ ingress:
+ - from:
+   - podSelector:
+      matchLabels:
+#        <PASTE WEB LABEL>        ##only web pod can send the request
+       app: web
+ egress:
+ - to:
+   - podSelector:
+      matchLabels:
+#       <PASTE WEB LABEL>
+       app: web

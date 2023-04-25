@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Statefilset
+metadata:
+ name: mysql
+spec:
+ replicas: 3
+ selector: 
+  matchLabels: 
+   app: mysql
+  template:
+   metadata:
+    labels:
+      app: mysql
+   spec:
+    containers:
+    - name: c1
+      image: quay,io/gauravkumar9130/mysql
+      env:
+      - name: MYSQL_ROOT_PASSWORD
+        value: rootpass
+    volumeClaimTemplates:
+      - metadata:
+         name: data-vol
+        spec:
+         accessModes:
+         - ReadriteMany
+         resources:
+          requests:
+           storage: 500Mi
+    serviceName: mysql-hsvc

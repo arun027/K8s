@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+ name: db-policy
+spec:
+ podSelector:
+  matchLabels:
+   #<PASTE DB LABEL>                ##we are creating for db pod
+   app: db
+ policyTypes:
+ - Ingress
+ ingress:
+ - from:
+   - podSelector:
+       matchLabels:
+        #<PASTE WEB LABEL>        ##only web pod can send the request
+           app: web
+        
+   ports:
+   - protocol: TCP
+     port: 80         

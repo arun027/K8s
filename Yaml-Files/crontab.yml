@@ -1,0 +1,68 @@
+apiVesion: batch/v1
+kind: CronJob
+metadata:
+  name: my-crontab
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: print
+            image: busybox:stable
+            command: ["echo", "this is a test"]
+          restartPolicy: Never
+    backoffLimit: 4
+    activeDeadlineSeconds: 10
+
+---
+
+#sidecal container example
+
+ apiVersion: v1
+ kind: Pod
+ metadata:
+   name: sidecar-test
+spec:
+  containers:
+  - name: writer
+    image: busybox:stable
+    command: ['sh', '-c', 'echo "the writer wrote this" >/output/data.txt; while true; do sleep 5; done']
+    volumeMounts:
+    - name: shared
+      mountPath: /output
+  - name: sidecar
+    image: busybox:stable
+    command: ['sh', '-c', 'while true; do cat /input/data.txt; sleep 5; done']
+    volumeMounts:
+    - name: shared
+      mountPath: /input
+  volume:
+  - name: shared
+    emptyDir: {}
+
+
+---
+
+#init conatainers
+
+apiversion: v1
+kind: pod
+metadata:
+   name: init-test
+spec:
+  containers:
+  - name: nginx
+    image: nginx:stable
+  initContainers:
+  - name: busybox
+    image: busybox:stable
+    command: ['sh', '-c', 'sleep 60']
+
+
+---
+
+
+
+  

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: abc
+spec:
+ volumes:
+ - name: myvol
+   secret:
+    secretNmae: db-se
